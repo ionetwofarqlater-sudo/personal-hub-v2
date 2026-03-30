@@ -38,7 +38,8 @@ export function useSavedItems(initial: SavedItem[], userId: string) {
         if (!res.ok) throw new Error(await res.text());
         const data: SavedItem = await res.json();
         setItems((prev) => prev.map((i) => (i.id === optimistic.id ? data : i)));
-      } catch {
+      } catch (err) {
+        console.error("[addItem] failed:", err);
         setItems((prev) => prev.filter((i) => i.id !== optimistic.id));
         try {
           localStorage.setItem(LS_KEY, JSON.stringify(input));
