@@ -7,11 +7,19 @@ dist/
 build/
 out/
 .claude/
+CLAUDE.md
 
 # env files
 .env
 .env*.local
 .env.production
+.env.compose
+
+# Docker / deployment
+.dockerignore
+
+# IDE / workspace
+*.code-workspace
 
 # TypeScript
 *.tsbuildinfo
