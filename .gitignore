@@ -1,0 +1,25 @@
+node_modules/
+.next/
+.vercel/
+.DS_Store
+coverage/
+dist/
+build/
+out/
+.claude/
+
+# env files
+.env
+.env*.local
+.env.production
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# OS
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
