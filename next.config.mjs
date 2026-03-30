@@ -18,14 +18,28 @@ const cspHeader = [
 
 const nextConfig = {
   output: "standalone",
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "50mb"
+    }
+  },
   env: {
     NEXT_PUBLIC_APP_VERSION: version
   },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "lh3.googleusercontent.com" },
-      { protocol: "https", hostname: "avatars.githubusercontent.com" }
+      { protocol: "https", hostname: "avatars.githubusercontent.com" },
+      { protocol: "https", hostname: "divass.space" }
     ]
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/files/:path*",
+        destination: `http://minio:9000/${process.env.MINIO_BUCKET ?? "personal-hub"}/:path*`
+      }
+    ];
   },
   async headers() {
     return [
