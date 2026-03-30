@@ -24,6 +24,13 @@ services:
       - EMAIL_FROM=${EMAIL_FROM}
       - ADMIN_EMAIL=${ADMIN_EMAIL}
       - MAX_ACTIVE_USERS=${MAX_ACTIVE_USERS}
+      - MINIO_ENDPOINT=${MINIO_ENDPOINT}
+      - MINIO_PORT=${MINIO_PORT}
+      - MINIO_USE_SSL=${MINIO_USE_SSL}
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+      - MINIO_BUCKET=${MINIO_BUCKET}
+      - MINIO_PUBLIC_URL=${MINIO_PUBLIC_URL}
     depends_on:
       postgres:
         condition: service_healthy
