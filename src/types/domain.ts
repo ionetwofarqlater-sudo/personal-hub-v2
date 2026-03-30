@@ -27,6 +27,7 @@ export type CreateSavedItemInput = {
   source_url: string | null;
   tags: string[];
   reply_to: string | null;
+  metadata?: Record<string, unknown>;
 };
 
 export type UpdateSavedItemInput = Partial<

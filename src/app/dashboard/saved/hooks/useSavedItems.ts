@@ -10,9 +10,7 @@ export function useSavedItems(initial: SavedItem[], userId: string) {
 
   const addItem = useCallback(
     async (rawInput: CreateSavedItemInput) => {
-      const { _meta, ...input } = rawInput as CreateSavedItemInput & {
-        _meta?: Record<string, string>;
-      };
+      const { metadata, ...input } = rawInput;
 
       const optimistic: SavedItem = {
         id: `temp-${Date.now()}`,
@@ -20,7 +18,7 @@ export function useSavedItems(initial: SavedItem[], userId: string) {
         ...input,
         is_pinned: false,
         is_favorite: false,
-        metadata: _meta ?? {},
+        metadata: metadata ?? {},
         deleted_at: null,
         reminder_at: null,
         reply_parent: null,
@@ -33,7 +31,7 @@ export function useSavedItems(initial: SavedItem[], userId: string) {
         const res = await fetch("/api/saved", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...input, metadata: _meta ?? {} })
+          body: JSON.stringify({ ...input, metadata: metadata ?? {} })
         });
         if (!res.ok) throw new Error(await res.text());
         const data: SavedItem = await res.json();
