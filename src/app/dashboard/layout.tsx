@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { sql } from "@/lib/db";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
+import BottomNav from "@/components/dashboard/BottomNav";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
@@ -19,7 +20,13 @@ export default async function DashboardLayout({ children }: { children: React.Re
   return (
     <div className="min-h-screen bg-gray-950">
       <DashboardHeader session={session} savedCount={savedCount} />
-      <main className="pt-20 px-4 pb-8 max-w-6xl mx-auto">{children}</main>
+      <main
+        className="px-4 pb-24 sm:pb-8 sm:pt-20 max-w-6xl mx-auto"
+        style={{ paddingTop: "calc(4rem + env(safe-area-inset-top))" }}
+      >
+        {children}
+      </main>
+      <BottomNav session={session} />
     </div>
   );
 }

@@ -68,7 +68,10 @@ export default function DashboardHeader({
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-gray-950/80 backdrop-blur-xl border-b border-gray-800/60">
+    <header
+      className="fixed top-0 left-0 right-0 z-50 bg-gray-950/80 backdrop-blur-xl border-b border-gray-800/60"
+      style={{ paddingTop: "env(safe-area-inset-top)" }}
+    >
       <div className="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
         <Link
           href="/dashboard"
@@ -92,7 +95,9 @@ export default function DashboardHeader({
             <span className="text-gray-400 text-xs mt-0.5 capitalize">{date}</span>
           </div>
           <div className="sm:hidden text-white font-mono font-bold text-sm">{time}</div>
-          <UserNav session={session} savedCount={savedCount} />
+          <div className="hidden sm:block">
+            <UserNav session={session} savedCount={savedCount} />
+          </div>
         </div>
       </div>
     </header>
