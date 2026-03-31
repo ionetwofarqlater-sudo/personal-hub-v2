@@ -154,8 +154,15 @@ export default function SavedComposer({ onAdd, onUploadDone, replyTo, onCancelRe
     textareaRef.current?.focus();
   }
 
-  function handleKeyDown(e: React.KeyboardEvent) {
+  function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    // Ctrl/Cmd+Enter always submits; bare Enter submits on mobile (no physical keyboard)
     if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+      e.preventDefault();
+      handleSubmit();
+      return;
+    }
+    // On touch devices (no modifier keys expected) bare Enter submits
+    if (e.key === "Enter" && !e.shiftKey && window.matchMedia("(pointer: coarse)").matches) {
       e.preventDefault();
       handleSubmit();
     }
@@ -276,9 +283,9 @@ export default function SavedComposer({ onAdd, onUploadDone, replyTo, onCancelRe
         </div>
       )}
 
-      <p className="text-gray-700 text-xs mt-1.5 pl-1">
+      <p className="text-gray-700 text-xs mt-1.5 pl-1 hidden sm:block">
         {isUploadMode
-          ? "Файл буде збережено у Supabase Storage"
+          ? "Файл буде збережено у хмарному сховищі"
           : "Ctrl+Enter — зберегти · #тег — автоматично розпізнається"}
       </p>
     </div>

@@ -104,9 +104,12 @@ export default function SavedClient({
   const hasSelection = selectedIds.size > 0;
 
   return (
-    <div className="flex flex-col h-[calc(100vh-5rem)]">
-      {/* Header */}
-      <div className="flex items-center gap-3 mb-3 flex-shrink-0">
+    <div
+      className="flex flex-col"
+      style={{ height: "calc(100dvh - 5rem - env(safe-area-inset-bottom))" }}
+    >
+      {/* Header — hidden on mobile (bottom nav handles navigation) */}
+      <div className="hidden sm:flex items-center gap-3 mb-3 flex-shrink-0">
         <div className="w-9 h-9 bg-gradient-to-br from-violet-500 to-blue-500 rounded-xl flex items-center justify-center shadow-md shadow-violet-500/20">
           <BookMarked className="w-5 h-5 text-white" />
         </div>
@@ -130,6 +133,18 @@ export default function SavedClient({
           </div>
         )}
       </div>
+      {/* Mobile storage bar */}
+      {storageLimit > 0 && (
+        <div className="sm:hidden flex items-center gap-2 mb-2 flex-shrink-0">
+          <div className="flex-1 h-0.5 bg-gray-800 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-violet-500/60 rounded-full"
+              style={{ width: `${Math.min(100, Math.round((storageUsed / storageLimit) * 100))}%` }}
+            />
+          </div>
+          <span className="text-[10px] text-gray-600">{fmtBytes(storageUsed)}</span>
+        </div>
+      )}
 
       <SavedSearchBar value={rawSearch} onChange={setRawSearch} loading={ftsLoading} />
       <SavedFilters filters={filters} onChange={setFilters} items={items} />

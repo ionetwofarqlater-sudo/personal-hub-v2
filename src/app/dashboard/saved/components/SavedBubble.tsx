@@ -20,7 +20,8 @@ import {
   FileText,
   FileDown,
   Bell,
-  BellOff
+  BellOff,
+  MoreHorizontal
 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import LinkPreview from "./LinkPreview";
@@ -72,6 +73,7 @@ export default function SavedBubble({
   const [showMd, setShowMd] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showReminderPicker, setShowReminderPicker] = useState(false);
+  const [showActions, setShowActions] = useState(false);
 
   const Icon = TYPE_ICON[item.content_type] ?? Type;
 
@@ -272,26 +274,63 @@ export default function SavedBubble({
         </div>
       </div>
 
-      {/* Actions — показуємо при hover */}
-      <div className="absolute right-2 top-1 hidden group-hover:flex items-center gap-0.5 bg-gray-900/90 backdrop-blur-sm border border-gray-800 rounded-xl px-1 py-0.5 shadow-xl z-10">
-        <ActionBtn onClick={onReply} title="Відповісти">
+      {/* Mobile "⋮" trigger — always visible on touch devices */}
+      <button
+        onClick={() => setShowActions((v) => !v)}
+        className="sm:hidden absolute right-1 top-1 p-1.5 rounded-lg text-gray-600 hover:text-gray-400 z-10"
+        title="Дії"
+      >
+        <MoreHorizontal className="w-4 h-4" />
+      </button>
+
+      {/* Actions — hover on desktop, toggle on mobile */}
+      <div
+        className={`absolute right-2 top-1 items-center gap-0.5 bg-gray-900/90 backdrop-blur-sm border border-gray-800 rounded-xl px-1 py-0.5 shadow-xl z-10 ${showActions ? "flex" : "hidden group-hover:flex"}`}
+      >
+        <ActionBtn
+          onClick={() => {
+            onReply();
+            setShowActions(false);
+          }}
+          title="Відповісти"
+        >
           <Reply className="w-3.5 h-3.5" />
         </ActionBtn>
-        <ActionBtn onClick={handleCopy} title="Копіювати">
+        <ActionBtn
+          onClick={() => {
+            handleCopy();
+          }}
+          title="Копіювати"
+        >
           {copied ? (
             <Check className="w-3.5 h-3.5 text-green-400" />
           ) : (
             <Copy className="w-3.5 h-3.5" />
           )}
         </ActionBtn>
-        <ActionBtn onClick={handleExportMd} title="Експорт .md">
+        <ActionBtn
+          onClick={() => {
+            handleExportMd();
+            setShowActions(false);
+          }}
+          title="Експорт .md"
+        >
           <FileText className="w-3.5 h-3.5" />
         </ActionBtn>
-        <ActionBtn onClick={handleExportJson} title="Експорт .json">
+        <ActionBtn
+          onClick={() => {
+            handleExportJson();
+            setShowActions(false);
+          }}
+          title="Експорт .json"
+        >
           <FileDown className="w-3.5 h-3.5" />
         </ActionBtn>
         <ActionBtn
-          onClick={item.is_pinned ? onUnpin : onPin}
+          onClick={() => {
+            (item.is_pinned ? onUnpin : onPin)();
+            setShowActions(false);
+          }}
           title={item.is_pinned ? "Відкріпити" : "Закріпити"}
         >
           {item.is_pinned ? (
@@ -301,7 +340,10 @@ export default function SavedBubble({
           )}
         </ActionBtn>
         <ActionBtn
-          onClick={item.is_favorite ? onUnfavorite : onFavorite}
+          onClick={() => {
+            (item.is_favorite ? onUnfavorite : onFavorite)();
+            setShowActions(false);
+          }}
           title={item.is_favorite ? "Прибрати" : "Обране"}
         >
           {item.is_favorite ? (
@@ -321,7 +363,10 @@ export default function SavedBubble({
           )}
         </ActionBtn>
         <ActionBtn
-          onClick={onDelete}
+          onClick={() => {
+            onDelete();
+            setShowActions(false);
+          }}
           title="Видалити"
           className="hover:text-red-400 hover:bg-red-400/10"
         >

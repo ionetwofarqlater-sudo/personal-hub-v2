@@ -13,9 +13,7 @@ const VERSION = process.env.NEXT_PUBLIC_APP_VERSION;
 function VersionBadge() {
   if (!VERSION) return null;
   return (
-    <span className="hidden sm:inline font-mono text-[10px] text-gray-500 leading-none mt-0.5">
-      v{VERSION}
-    </span>
+    <span className="font-mono text-[10px] text-gray-500 leading-none mt-0.5">v{VERSION}</span>
   );
 }
 
@@ -81,9 +79,7 @@ export default function DashboardHeader({
             <Zap className="w-4 h-4 text-white" />
           </div>
           <div className="flex flex-col">
-            <span className="font-semibold text-white hidden sm:block leading-none">
-              Personal Hub
-            </span>
+            <span className="font-semibold text-white leading-none">Personal Hub</span>
             <VersionBadge />
           </div>
         </Link>

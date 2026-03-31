@@ -99,7 +99,10 @@ export default function ImageLightbox({ images, initialIndex, onClose }: Props) 
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       {/* Top bar */}
-      <div className="flex items-center justify-between px-4 py-3 flex-shrink-0">
+      <div
+        className="flex items-center justify-between px-4 py-3 flex-shrink-0"
+        style={{ paddingTop: "max(0.75rem, env(safe-area-inset-top))" }}
+      >
         <span className="text-gray-400 text-sm truncate max-w-xs">
           {current.title ?? "Зображення"}
           {images.length > 1 && (
