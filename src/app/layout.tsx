@@ -9,13 +9,23 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-geist-sans" });
 
 export const metadata: Metadata = {
   title: "Personal Hub",
-  description: "Твій персональний цифровий простір"
+  description: "Твій персональний цифровий простір",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    title: "Personal Hub",
+    statusBarStyle: "black-translucent"
+  },
+  other: {
+    "mobile-web-app-capable": "yes"
+  }
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  viewportFit: "cover"
+  viewportFit: "cover",
+  themeColor: "#030712"
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
